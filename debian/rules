@@ -1,0 +1,45 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+
+# TODO: Compile also net or other versions
+
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	dh_auto_clean
+	# Delete namd
+	-rm -r build-namd-mc
+	-rm -r build-namd-mc-cuda
+	# Delete charm
+	-rm -r charm-6.4.0
+
+override_dh_auto_configure:
+	# Extract charm
+	tar -xf charm-6.4.0.tar
+	# Configure namd-mc
+	mkdir build-namd-mc
+	./config build-namd-mc/Linux-x86_64-g++ --charm-arch multicore-linux64-gfortran --tcl-prefix /usr/include/tcl
+	# Configure namd-mc-cuda
+	mkdir build-namd-mc-cuda
+	./config build-namd-mc-cuda/Linux-x86_64-g++ --charm-arch multicore-linux64-gfortran --tcl-prefix /usr/include/tcl \
+		--with-cuda --cuda-prefix /usr
+
+override_dh_auto_build:
+	# Compile charm++ first
+	cd charm-6.4.0; ./build charm++ multicore-linux64 --with-production gfortran
+	# Compile namd-mc
+	cd build-namd-mc/Linux-x86_64-g++; make
+	# Rename the binary
+	mv build-namd-mc/Linux-x86_64-g++/namd2 build-namd-mc/Linux-x86_64-g++/namd2-mc
+	# 	cd ../..
+	# Compile namd-mc-cuda
+	cd build-namd-mc-cuda/Linux-x86_64-g++; make
+	# Rename the binary
+	mv build-namd-mc-cuda/Linux-x86_64-g++/namd2 build-namd-mc-cuda/Linux-x86_64-g++/namd2-mc-cuda

@@ -1,0 +1,7 @@
+# Indent everything by spaces
+* whitespace=trailing-space,tab-in-indent,tabwidth=4
+
+# Makefile must be indented by tabs
+debian/rules whitespace=-tab-in-indent
+# Trailing spaces may occur in patch
+debian/patches/*.patch whitespace=-trailing-space

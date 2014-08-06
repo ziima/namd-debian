@@ -1,0 +1,35 @@
+Source: namd
+Section: science
+Priority: extra
+Maintainer: Vlastimil Zíma <zima@karlov.mff.cuni.cz>
+Build-Depends: debhelper (>= 8.0.0), sfftw-dev, tcl-dev, csh, gfortran, nvidia-cuda-toolkit
+Standards-Version: 3.9.3
+Homepage: http://www.ks.uiuc.edu/Research/namd/
+
+Package: namd-common
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: NAMD - Scalable molecular dynamics - common files
+ NAMD is a parallel molecular dynamics code designed for high-performance
+ simulation of large biomolecular systems.
+ .
+ This package contains files shared by all namd variants.
+
+Package: namd-mc
+Architecture: amd64
+Depends: namd-common (= ${source:Version}), ${shlibs:Depends}, ${misc:Depends}
+Description: NAMD - Scalable molecular dynamics - multicore
+ NAMD is a parallel molecular dynamics code designed for high-performance
+ simulation of large biomolecular systems.
+ .
+ This package contains a version of namd compiled for a single node usage.
+
+Package: namd-mc-cuda
+Architecture: amd64
+Depends: namd-common (= ${source:Version}), nvidia-driver (>= 270.42) | nvidia-kernel-dkms (>= 270.42), ${shlibs:Depends}, ${misc:Depends}
+Description: NAMD - Scalable molecular dynamics - multicore CUDA
+ NAMD is a parallel molecular dynamics code designed for high-performance
+ simulation of large biomolecular systems.
+ .
+ This package contains a version of namd compiled with CUDA support for
+ a single node usage.

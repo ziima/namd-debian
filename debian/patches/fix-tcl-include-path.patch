@@ -1,0 +1,14 @@
+Fix the path of the tcl include directory
+Index: namd-2.9/arch/Linux-x86_64.tcl
+===================================================================
+--- namd-2.9.orig/arch/Linux-x86_64.tcl	2011-06-17 22:38:43.000000000 +0200
++++ namd-2.9/arch/Linux-x86_64.tcl	2013-09-04 12:32:20.324575495 +0200
+@@ -1,7 +1,7 @@
+ 
+ #TCLDIR=/Projects/namd2/tcl/tcl8.5.9-linux-x86_64
+ TCLDIR=/Projects/namd2/tcl/tcl8.5.9-linux-x86_64-threaded
+-TCLINCL=-I$(TCLDIR)/include
++TCLINCL=-I$(TCLDIR)
+ #TCLLIB=-L$(TCLDIR)/lib -ltcl8.5 -ldl
+ TCLLIB=-L$(TCLDIR)/lib -ltcl8.5 -ldl -lpthread
+ TCLFLAGS=-DNAMD_TCL
